@@ -28,36 +28,10 @@ User logs in with password
     Input Password      user_password     ${VALID_PASSWORD}
     Click Button        commit
 
-Open Browser to Login Page
-    Open Browser    ${LOGIN URL}    ${BROWSER}
-    Set Selenium Speed  ${DELAY}
-    Login Page Should Be Open
-
-Go To Login Page
-    Go To       ${LOGIN URL}
-
-Login Page Should Be Open
-    Title Should Be     Address-O-Matic
-
-Welcome Page Should be Open
-    Page Should Contain Link       Sign out
-
-Sign up Page Should be Open
-    Title Should Be     Sign up
-
 A new user is signed up
     Input Text          user_email          test@you.com
     Input Password      user_password       123456
     Input Password      user_password_confirmation      123456
     Click Button        Sign up
 
-New User logs in
-    Input Text          user_email        test@you.com
-    Input Password      user_password     123456
-    Click Button        commit
-    Page Should Contain Link       Sign out
 
-the user should be able to log in
-    Go to login page
-    New User Logs in
-    Welcome Page Should be Open
