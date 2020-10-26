@@ -7,7 +7,7 @@
    :local:
 
 Setup
-=====
+-----
 
 - Install Python 3.7
     https://www.python.org/downloads/release/python-379/
@@ -27,6 +27,22 @@ Setup
     webdrivermanager --downloadpath ./WebDriverManager chrome
 - Install Request Library for Robot Framework
     pip install --upgrade robotframework-requests
+
+To Run
+------
+
+- API Tests
+    robot -d ./output/api address-o-matic_tests/api_tests.robot
+
+- Web Tests
+    robot -d ./output/web address-o-matic_tests/web_tests.robot
+
+To View Results
+---------------
+
+- Open in Browser the report.html file located in the appropriate directory inside of the output directory.
+
+
 
 
 

@@ -7,39 +7,42 @@ Documentation    Suite description
 Resource          ./api_resource.robot
 Library           RequestsLibrary
 Library           Collections
-Library           String
-Library           json
+
 
 *** Variables ***
-${user_id_don}      26
+${user_id_don}      32
 
 *** Test Cases ***
 
 List All Users
     [Documentation]     Tests GET all users
-    [Tags]              GET
+    [Tags]              GET User
     Get All Users
 
 List User
     [Documentation]     Tests GET a user by ID
-    [Tags]              GET
-    Get User    ${user_id_don}
+    [Tags]              GET User
+    Get User            ${user_id_don}
 
 Create a User
     [Documentation]     Tests POST a new user
-    [Tags]              POST
+    [Tags]              POST User
     Post New Dummy User
 
 Edit a User
     [Documentation]     Tests PATCH a user
-    [Tags]              PATCH
-    Patch User      ${user_id_don}
+    [Tags]              PATCH User
+    Patch User          ${user_id_don}
 
 Remove a User
     [Documentation]     Tests DELETE a user
-    [Tags]              DELETE
-    Delete a User     ${user_id_don}
+    [Tags]              DELETE User
+    Delete a User       31
 
+Get All Contacts For User
+    [Documentation]     Tests GET all Contacts
+    [Tags]              GET Contacts
+    Get Contacts for User   ${user_id_don}
 
 *** Keywords ***
 Get All Users
@@ -63,16 +66,16 @@ Get User
 
 Post New Dummy User
     Create Session      address-o-matic     ${SERVER}
-    ${unique_num}       Generate random string  6   0123456789
-    ${email}            catenate    test    ${unique_num}   @you.com
-    &{data}    Create Dictionary   email=${email}  password=123456   first_name=Dummy   last_name=User
-    &{formData}    create dictionary  user=${data}
-    &{headers}     Create Dictionary    Content-Type=application/x-www-form-urlencoded
-    ${post_response}     Post Request     address-o-matic    /api/v1/users   data=${formData}   headers=${headers}
+    ${unique_num}       Make Unique Number
+    ${email}            catenate    SEPARATOR=  test    ${unique_num}   @you.com
+    @{data}    Create Dictionary   email=${email}  password=123456   first_name=Dummy   last_name=User
+    @{formData}    create dictionary  user=@{data}
+    ${headers}     Create Dictionary    Content-Type=application/x-www-form-urlencoded
+    ${post_response}     Post Request     address-o-matic    /api/v1/users   data=@{formData}   headers=${headers}
     status should be    200     ${post_response}
 
 Patch User
-    [Arguments]  @{user_id}
+    [Arguments]  ${user_id}
     Create Session      address-o-matic     ${SERVER}
     ${patch_request}     catenate    SEPARATOR=/  /api/v1/users   ${user_id}
     &{data}    Create Dictionary   last_name=User
@@ -82,11 +85,34 @@ Patch User
     status should be    200     ${patch_response}
 
 Delete a User
-    [Arguments]  @{user_id}
+    [Arguments]  ${user_id}
     Create Session      address-o-matic     ${SERVER}
     ${delete_request}     catenate    SEPARATOR=/  /api/v1/users   ${user_id}
     ${delete_response}     delete request  address-o-matic     ${delete_request}
     status should be    200     ${delete_response}
 
+Get Contacts for User
+    [Arguments]  ${user_id}
+    Create Session          address-o-matic     ${SERVER}
+    ${user_path}            catenate            SEPARATOR=/         /api/v1/users       ${user_id}
+    ${contact_request}      catenate            SEPARATOR=/         ${user_path}        contacts
+    ${contact_response}     get request         address-o-matic     ${contact_request}
+    status should be        200                 ${contact_response}
+    ${contact}              get from dictionary     ${contact_response.json()}     contacts
+    ${contact_list}         convert to list     ${contact}
+    log to console          ${contact_list}
+
+Post New Contact for User
+    [Arguments]  ${user_id}
+    Create Session          address-o-matic     ${SERVER}
+    ${unique_num}           Make Unique Number
+    ${first_name}           catenate            SEPARATOR=          name        ${unique_num}
+    ${user_path}            catenate            SEPARATOR=/         /api/v1/users       ${user_id}
+    ${contact_request}      catenate            SEPARATOR=/         ${user_path}        contacts
+    ${contact_response}     post request        address-o-matic     ${contact_request}
+    status should be        200                 ${contact_response}
+    ${contact}              get from dictionary     ${contact_response.json()}     contacts
+    ${contact_list}         convert to list     ${contact}
+    log to console          ${contact_list}
 
 

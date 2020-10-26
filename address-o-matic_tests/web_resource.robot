@@ -33,6 +33,13 @@ Welcome Page Should be Open
 Sign up Page Should be Open
     Title Should Be     Sign up
 
+User Logs in with Password
+    [Arguments]    ${user_email}   ${user_password}
+    Input Text          id:user_email       ${user_email}
+    Input Password      id:user_password    ${user_password}
+    Click Button        name:commit
+
+
 New User logs in
     Input Text          user_email        test@you.com
     Input Password      user_password     123456
