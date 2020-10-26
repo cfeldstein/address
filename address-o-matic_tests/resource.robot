@@ -11,7 +11,6 @@ ${VALID PASSWORD}   123456
 ${EMPTY}
 
 *** Keywords ***
-
 Make Unique Number
     ${unique_num}       Generate Random String  6   0123456789
     [Return]            ${unique_num}

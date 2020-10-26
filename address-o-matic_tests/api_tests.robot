@@ -10,7 +10,7 @@ Library           Collections
 
 
 *** Variables ***
-${user_id_don}      32
+${user_id_don}      26
 
 *** Test Cases ***
 
@@ -43,6 +43,12 @@ Get All Contacts For User
     [Documentation]     Tests GET all Contacts
     [Tags]              GET Contacts
     Get Contacts for User   ${user_id_don}
+
+Create Contact For User
+    [Documentation]     Tests POST a new Contact
+    [Tags]              POST Contacts
+    Post New Contact for User   ${user_id_don}
+
 
 *** Keywords ***
 Get All Users
