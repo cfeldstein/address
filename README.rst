@@ -37,10 +37,13 @@ To Run
 - Web Tests
     robot -d ./output/web address-o-matic_tests/web_tests.robot
 
+- All
+    robot -d ./output address-o-matic_tests/
+
 To View Results
 ---------------
 
-- Open in Browser the report.html file located in the appropriate directory inside of the output directory.
+- Open in Browser the report.html file located in the output directory. Note the results are overwritten with each run.
 
 
 
