@@ -15,8 +15,8 @@ Setup
     If using Python 2.7.9 and above this is included with python install
 - Create a working venv for python
     https://docs.python.org/3.7/library/venv.html
+- Clone the repository code to the venv
 - Goto root of your venv working directory
-- Unpack contents of ZIP
 - Install Robot Framework
     pip install robotframework
 - Install Selenium for Robot Framework
